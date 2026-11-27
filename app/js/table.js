@@ -92,4 +92,17 @@ export function bindDataTable(id, columns, rows) {
     });
   }
   render();
+  // API untuk kontrol di luar tabel (mis. menu "Urutkan" di halaman provinsi).
+  return {
+    setSort(key, dir) {
+      state.sortKey = key;
+      state.sortDir = dir;
+      render();
+    },
+    setQuery(q) {
+      state.query = q;
+      if (filter) filter.value = q;
+      render();
+    },
+  };
 }

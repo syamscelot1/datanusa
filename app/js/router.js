@@ -1,7 +1,7 @@
 // Router hash DataNusa: #/ , #/kependudukan, #/ekonomi, #/tenaga-kerja,
 // #/harga, #/kemiskinan, #/provinsi, #/tentang. Tanpa network, tanpa reload.
 
-import { VIEWS, mountProvinces } from './views.js';
+import { VIEWS, mountPage } from './views.js';
 
 export const ROUTES = [
   { path: '', label: 'Beranda', view: 'home' },
@@ -16,11 +16,16 @@ export const ROUTES = [
 
 function currentPath() {
   const hash = window.location.hash.replace(/^#\/?/, '');
-  return ROUTES.some((r) => r.path === hash) ? hash : '';
+  const [path, query] = hash.split('?');
+  const params = new URLSearchParams(query ?? '');
+  return {
+    path: ROUTES.some((r) => r.path === path) ? path : '',
+    detail: params.get('detail'),
+  };
 }
 
 export function renderRoute() {
-  const path = currentPath();
+  const { path, detail } = currentPath();
   const route = ROUTES.find((r) => r.path === path) ?? ROUTES[0];
   const app = document.getElementById('app');
   app.innerHTML = VIEWS[route.view]();
@@ -30,7 +35,7 @@ export function renderRoute() {
     if (active) a.setAttribute('aria-current', 'page');
     else a.removeAttribute('aria-current');
   });
-  if (route.view === 'provinsi') mountProvinces();
+  mountPage(route.view, { detail });
   window.scrollTo(0, 0);
 }
 
