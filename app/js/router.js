@@ -9,8 +9,10 @@ export const ROUTES = [
   { path: 'ekonomi', label: 'Ekonomi', view: 'ekonomi' },
   { path: 'tenaga-kerja', label: 'Ketenagakerjaan', view: 'tenaga-kerja' },
   { path: 'harga', label: 'Harga & Inflasi', view: 'harga' },
+  { path: 'kalkulator', label: 'Kalkulator Inflasi', view: 'calculator' },
   { path: 'kemiskinan', label: 'Kemiskinan', view: 'kemiskinan' },
   { path: 'provinsi', label: 'Perbandingan Provinsi', view: 'provinsi' },
+  { path: 'asean', label: 'Perbandingan ASEAN', view: 'asean' },
   { path: 'tentang', label: 'Tentang', view: 'tentang' },
 ];
 

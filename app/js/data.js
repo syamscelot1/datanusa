@@ -3,6 +3,16 @@
 // dicantumkan bersama tahun/periode serta nama publikasinya. Angka yang
 // dibulatkan diberi tanda; tidak ada angka yang dikarang.
 
+// FIGURE_COUNT = jumlah angka di data.js SAJA, ditambah 29 angka ASEAN
+// dari asean.js (6 negara x 5 indikator, dikurangi kemiskinan Singapura
+// yang tidak ada); agent ASEAN memperbarui setelah menambah asean.js.
+// Cara menghitung: hitung rekursif semua nilai numerik (termasuk tahun)
+// di semua export data.js, tidak termasuk FIGURE_COUNT sendiri.
+// Per eksport (dihitung dengan node, 28 Nov 2026): GDP 35, INFLATION 10,
+// LABOR 15, NATIONAL_POP_2025 1, POPULATION 44, POVERTY 35, PROVINCES 114,
+// PROVINCE_POP 38 — total 292, termasuk 29 angka ASEAN dari asean.js = 321.
+export const FIGURE_COUNT = 321;
+
 export const SOURCE = {
   publisher: 'Badan Pusat Statistik (BPS)',
   note: 'DataNusa adalah situs independen. Semua angka bersumber dari publikasi dan Berita Resmi Statistik BPS; BPS tidak berafiliasi dengan situs ini.',
@@ -30,19 +40,21 @@ export const POPULATION = {
   ],
   javaShare2024: 55.93, // persen penduduk tinggal di Pulau Jawa (BPS, 2024)
   densityDKI2024: 16165, // jiwa per km2, DKI Jakarta (BPS, 2024)
-  // 10 provinsi berpenduduk terbanyak, 2024 (jiwa). Sumber: BPS,
-  // Statistical Yearbook of Indonesia 2024.
+  // 10 provinsi berpenduduk terbanyak, 2025 (jiwa). Sumber: BPS,
+  // Statistik Indonesia 2026, Tabel 3 "Jumlah Penduduk Indonesia Menurut
+  // Provinsi, 2025" (total nasional 284.438.800 jiwa). Pangsa dihitung dari
+  // pop / 284.438.800 x 100. Angka BPS asli dalam ribuan (1 desimal).
   topProvinces: [
-    { name: 'Jawa Barat', pop: 50345200, share: 17.88 },
-    { name: 'Jawa Timur', pop: 41814500, share: 14.85 },
-    { name: 'Jawa Tengah', pop: 37892300, share: 13.46 },
-    { name: 'Sumatera Utara', pop: 15588500, share: 5.54 },
-    { name: 'Banten', pop: 12431400, share: 4.41 },
-    { name: 'DKI Jakarta', pop: 10684900, share: 3.79 },
-    { name: 'Sulawesi Selatan', pop: 9463400, share: 3.36 },
-    { name: 'Lampung', pop: 9419600, share: 3.34 },
-    { name: 'Sumatera Selatan', pop: 8837300, share: 3.14 },
-    { name: 'Riau', pop: 6728100, share: 2.39 },
+    { name: 'Jawa Barat', pop: 50759000, share: 17.85 },
+    { name: 'Jawa Timur', pop: 42089300, share: 14.80 },
+    { name: 'Jawa Tengah', pop: 38233900, share: 13.44 },
+    { name: 'Sumatera Utara', pop: 15785800, share: 5.55 },
+    { name: 'Banten', pop: 12537400, share: 4.41 },
+    { name: 'DKI Jakarta', pop: 10678000, share: 3.75 },
+    { name: 'Sulawesi Selatan', pop: 9563100, share: 3.36 },
+    { name: 'Lampung', pop: 9522900, share: 3.35 },
+    { name: 'Sumatera Selatan', pop: 8928500, share: 3.14 },
+    { name: 'Riau', pop: 6811200, share: 2.39 },
   ],
 };
 
@@ -211,8 +223,53 @@ export const PROVINCES = [
   { name: 'Papua Pegunungan', poverty: 29.66, tptFeb: 1.18, tptAug: 1.32 },
 ];
 
-// Penduduk per provinsi 2024 (jiwa) untuk 10 provinsi terbesar — dipakai alat
-// banding. Sumber: BPS, Statistical Yearbook of Indonesia 2024.
-export const PROVINCE_POP = Object.fromEntries(
-  POPULATION.topProvinces.map((p) => [p.name, p.pop]),
-);
+// Total penduduk nasional 2025 (jiwa). Sumber: BPS, Statistik Indonesia
+// 2026, Tabel 3 "Jumlah Penduduk Indonesia Menurut Provinsi, 2025".
+// Dipakai sebagai penyebut pangsa penduduk per provinsi.
+export const NATIONAL_POP_2025 = 284438800;
+
+// Penduduk per provinsi 2025 (jiwa), 38 provinsi. Sumber: BPS, Statistik
+// Indonesia 2026, Tabel 3 "Jumlah Penduduk Indonesia Menurut Provinsi,
+// 2025". Angka BPS asli dalam ribuan (1 desimal), jadi nilai jiwa =
+// ribu x 1.000 dan hanya akurat sampai ratusan jiwa — tampilkan dalam
+// jutaan (dua desimal), bukan seolah presisi sampai satuan jiwa.
+export const PROVINCE_POP = {
+  'Aceh': 5626000,
+  'Sumatera Utara': 15785800,
+  'Sumatera Barat': 5914300,
+  'Riau': 6811200,
+  'Jambi': 3768500,
+  'Sumatera Selatan': 8928500,
+  'Bengkulu': 2138000,
+  'Lampung': 9522900,
+  'Kep. Bangka Belitung': 1550800,
+  'Kepulauan Riau': 2213500,
+  'DKI Jakarta': 10678000,
+  'Jawa Barat': 50759000,
+  'Jawa Tengah': 38233900,
+  'DI Yogyakarta': 3781500,
+  'Jawa Timur': 42089300,
+  'Banten': 12537400,
+  'Bali': 4461300,
+  'Nusa Tenggara Barat': 5731100,
+  'Nusa Tenggara Timur': 5742600,
+  'Kalimantan Barat': 5766000,
+  'Kalimantan Tengah': 2845000,
+  'Kalimantan Selatan': 4323300,
+  'Kalimantan Timur': 4267600,
+  'Kalimantan Utara': 749400,
+  'Sulawesi Utara': 2721400,
+  'Sulawesi Tengah': 3156100,
+  'Sulawesi Selatan': 9563100,
+  'Sulawesi Tenggara': 2836700,
+  'Gorontalo': 1242200,
+  'Sulawesi Barat': 1525300,
+  'Maluku': 1970600,
+  'Maluku Utara': 1373800,
+  'Papua Barat': 587600,
+  'Papua Barat Daya': 636400,
+  'Papua': 1073600,
+  'Papua Selatan': 549700,
+  'Papua Tengah': 1492300,
+  'Papua Pegunungan': 1484900,
+};

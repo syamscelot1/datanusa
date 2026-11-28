@@ -429,3 +429,64 @@ main > section { margin-bottom: 34px; }
   .prov-detail-grid { grid-template-columns: 1fr; }
   .map-legend-unit { margin-left: 0; }
 }
+
+/* ---- Strip kuantitatif hero (v3) ---- */
+.figure-strip {
+  margin: 14px 0 0;
+  padding: 10px 14px;
+  background: var(--teal-soft);
+  border: 1px solid #bcd8d0;
+  border-radius: 10px;
+  font-size: 14px;
+  color: var(--ink);
+}
+.figure-strip strong { color: var(--teal-dark); }
+
+/* ---- Kalkulator inflasi (v3) ---- */
+.calc-card { margin-bottom: 18px; }
+.calc-form {
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr auto;
+  gap: 12px;
+  align-items: end;
+  margin: 14px 0 6px;
+}
+.calc-form label { font-weight: 700; font-size: 14px; display: block; }
+.calc-form input,
+.calc-form select {
+  display: block;
+  width: 100%;
+  margin-top: 6px;
+  padding: 10px 12px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  font: inherit;
+  font-size: 15px;
+  background: #fff;
+}
+.btn-calc {
+  padding: 10px 22px;
+  border: none;
+  border-radius: 8px;
+  background: var(--teal);
+  color: #fff;
+  font: inherit;
+  font-size: 15px;
+  font-weight: 700;
+  cursor: pointer;
+}
+.btn-calc:hover { background: var(--teal-dark); }
+.calc-result { margin-top: 16px; }
+.calc-value {
+  margin: 0;
+  font-size: 34px;
+  font-weight: 800;
+  color: var(--teal-dark);
+}
+.calc-sentence { margin: 6px 0 0; font-size: 17px; }
+.calc-detail { margin: 6px 0 0; font-size: 14px; color: var(--muted); }
+.calc-error { margin: 0; font-weight: 700; color: #b3261e; }
+@media (max-width: 700px) {
+  .calc-form { grid-template-columns: 1fr 1fr; }
+  .calc-value { font-size: 28px; }
+}
